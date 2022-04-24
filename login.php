@@ -1,3 +1,23 @@
+<?php
+    session_start();
+    include_once 'action/login.class.php';
+    if(isset($_POST['btn_login'])){
+
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $resData = loginClass::login($username, $password);
+        if(count($resData) > 0){
+            $_SESSION['name'] = $resData[0]['name'];
+            echo "<script>alert('login สำเร็จ'); 
+            window.location.href='dashboard.php'</script>";
+        }else{
+            echo "<script>alert('username หรือ password ไม่ถูกต้อง!')</script>";
+        }
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,15 +65,15 @@
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text" class="form-control form-control-sm">
+                            <input type="text" name="username" class="form-control form-control-sm">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" class="form-control form-control-sm">
+                            <input type="password" name="password" class="form-control form-control-sm">
                         </div>
                         <div class="text-end">
-                            <!-- <button type="submit" class="btn btn-primary">LOGIN</button> -->
-                            <a href="dashboard.php" class="btn btn-primary">LOGIN</a>
+                            <button type="submit" name="btn_login" class="btn btn-primary">LOGIN</button>
+                            <!-- <a href="dashboard.php" class="btn btn-primary">LOGIN</a> -->
                         </div>
                     </form>
                 </div>

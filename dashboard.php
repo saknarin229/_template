@@ -1,3 +1,9 @@
+
+<?php
+    include_once 'myclassOption/option.class.php';
+    optionClass::chackLogin();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
