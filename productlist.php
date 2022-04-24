@@ -1,11 +1,14 @@
 <?php
-    session_start();
-    include_once 'action/addproduct.class.php';
-    include_once 'myclassOption/option.class.php';
-    // optionClass::chackLogin();
+session_start();
+include_once 'action/addproduct.class.php';
+include_once 'myclassOption/option.class.php';
+optionClass::chackLogin();
 
-    $resData = addproductClass::getData();
-    // print_r($resData);
+$resData = addproductClass::getData();
+
+if (isset($_GET['del'])) {
+    addproductClass::deleteData($_GET['del']);
+}
 
 ?>
 
@@ -35,7 +38,14 @@
                     </h1>
                 </div>
                 <div class="col-6 text-end row align-items-center">
-                    <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php if (isset($_SESSION['name'])) : ?>
+                        <strong>
+                            <a class="text-light" href="dashboard.php"><?php echo $_SESSION['name'] ?></a>
+                        </strong>
+                        <a onclick="if(!confirm('ฉันต้องการออกจากระบบ!')) return false" class="text-light" href="logout.php">ออกจากระบบ</a>
+                    <?php else : ?>
+                        <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -75,22 +85,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($resData as $key=>$item):?>
-                            <tr>
-                                <td><?php echo $item['productCode']?></td>
-                                <td><?php echo $item['productName']?> </td>
-                                <td><?php echo $item['productPrice'] ?> บาท</td>
-                                <td>
-                                    <a href="addproduct.php?id=<?php echo $item['id']?>">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="" onclick="if(!confirm('are you sure ?')) return false">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                            <?php foreach ($resData as $key => $item) : ?>
+                                <tr>
+                                    <td><?php echo $item['productCode'] ?></td>
+                                    <td><?php echo $item['productName'] ?> </td>
+                                    <td><?php echo $item['productPrice'] ?> บาท</td>
+                                    <td>
+                                        <a href="addproduct.php?id=<?php echo $item['id'] ?>">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="?del=<?php echo $item['productCode'] ?>" onclick="if(!confirm('are you sure ?')) return false">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
 

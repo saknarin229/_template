@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+include_once 'action/addproduct.class.php';
+
+$resData = addproductClass::getDataCode($_GET['id']);
+$files = scandir("images/{$_GET['id']}");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +32,14 @@
                     </h1>
                 </div>
                 <div class="col-6 text-end row align-items-center">
-                    <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php if (isset($_SESSION['name'])) : ?>
+                        <strong>
+                            <a class="text-light" href="dashboard.php"><?php echo $_SESSION['name'] ?></a>
+                        </strong>
+                        <a onclick="if(!confirm('ฉันต้องการออกจากระบบ!')) return false" class="text-light" href="logout.php">ออกจากระบบ</a>
+                    <?php else : ?>
+                        <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -31,9 +48,10 @@
 
     <!-- --------------- Title -->
     <section class="col-12 text-center p-5">
-        <img src="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" class="w-25" alt="หมวก">
-        <h1>PRODUCT NAME</h1>
-        <h3>250.00 บาท</h3>
+
+        <img src="images/<?php echo $_GET['id'] ?>/<?php echo $files[2] ?>" class="w-25">
+        <h1><?php echo $resData[0]['productName'] ?></h1>
+        <h3><?php echo number_format($resData[0]['productPrice'], 2) ?> บาท</h3>
     </section>
     <!-- --------------- End Title -->
 
@@ -42,18 +60,23 @@
     <section class="col-12 mt-2">
         <div class="container">
             <div class="row  p-3 gap-3 justify-content-center">
-
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi aliquam autem a vel commodi perferendis provident reprehenderit cum maxime, labore pariatur aperiam necessitatibus neque assumenda voluptatum odio quisquam in, enim molestiae! Nobis blanditiis doloremque dolor cupiditate consectetur, iste voluptas quis obcaecati, velit exercitationem corrupti odit quia beatae sunt minima numquam fugit soluta harum. Maxime, maiores ipsa! Perferendis, enim consectetur ullam ducimus numquam autem rem deserunt esse omnis, aut debitis neque id? Quibusdam excepturi id sint beatae corrupti quam! Necessitatibus labore tenetur nemo, tempore quidem, nostrum non alias aliquid rem beatae earum dolor magni consectetur numquam voluptatum ipsam magnam molestiae voluptas vero quia laborum repellat eligendi similique reprehenderit! Iusto a suscipit voluptatibus nostrum asperiores cum, impedit quidem necessitatibus, iure error maiores. Enim, eligendi saepe, tempora aspernatur voluptas illo quas veniam esse ducimus libero odit omnis doloribus blanditiis quidem unde natus sed error dolorum ab veritatis! Quam earum facilis minus soluta odio!</p>
+                <div class="col-8">
+                    <p><?php echo $resData[0]['productDetail'] ?></p>
+                </div>
 
             </div>
 
-            <div class="row text-center">
-                <a href="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" target="_black">
-                    <img src="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" class="w-25 m-3 shadow-sm border" alt="หมวก">
-                    <img src="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" class="w-25 m-3 shadow-sm border" alt="หมวก">
-                    <img src="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" class="w-25 m-3 shadow-sm border" alt="หมวก">
-                    <img src="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" class="w-25 m-3 shadow-sm border" alt="หมวก">
-                </a>
+            <div class="row justify-content-center">
+
+                <?php foreach ($files as $key => $item) : ?>
+                    <?php if ($key > 1) : ?>
+                        <div class="col-3">
+                            <a href="<?php echo "images/{$_GET['id']}/$item" ?>" target="_black">
+                                <img src="<?php echo "images/{$_GET['id']}/$item" ?>" class="w-100 m-3 shadow-sm border" alt="หมวก">
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
 
         </div>

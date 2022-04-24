@@ -1,7 +1,7 @@
-
 <?php
-    include_once 'myclassOption/option.class.php';
-    optionClass::chackLogin();
+session_start();
+include_once 'myclassOption/option.class.php';
+optionClass::chackLogin();
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,14 @@
                     </h1>
                 </div>
                 <div class="col-6 text-end row align-items-center">
-                    <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php if (isset($_SESSION['name'])) : ?>
+                        <strong>
+                            <a class="text-light" href="dashboard.php"><?php echo $_SESSION['name'] ?></a>
+                        </strong>
+                        <a onclick="if(!confirm('ฉันต้องการออกจากระบบ!')) return false" class="text-light" href="logout.php">ออกจากระบบ</a>
+                    <?php else : ?>
+                        <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

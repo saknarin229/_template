@@ -1,20 +1,20 @@
 <?php
-    session_start();
-    include_once 'action/login.class.php';
-    if(isset($_POST['btn_login'])){
+session_start();
+include_once 'action/login.class.php';
+if (isset($_POST['btn_login'])) {
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-        $resData = loginClass::login($username, $password);
-        if(count($resData) > 0){
-            $_SESSION['name'] = $resData[0]['name'];
-            echo "<script>alert('login สำเร็จ'); 
+    $resData = loginClass::login($username, $password);
+    if (count($resData) > 0) {
+        $_SESSION['name'] = $resData[0]['name'];
+        echo "<script>alert('login สำเร็จ'); 
             window.location.href='dashboard.php'</script>";
-        }else{
-            echo "<script>alert('username หรือ password ไม่ถูกต้อง!')</script>";
-        }
+    } else {
+        echo "<script>alert('username หรือ password ไม่ถูกต้อง!')</script>";
     }
+}
 ?>
 
 
@@ -42,7 +42,14 @@
                     </h1>
                 </div>
                 <div class="col-6 text-end row align-items-center">
-                    <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php if (isset($_SESSION['name'])) : ?>
+                        <strong>
+                            <a class="text-light" href="dashboard.php"><?php echo $_SESSION['name'] ?></a>
+                        </strong>
+                        <a onclick="if(!confirm('ฉันต้องการออกจากระบบ!')) return false" class="text-light" href="logout.php">ออกจากระบบ</a>
+                    <?php else : ?>
+                        <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

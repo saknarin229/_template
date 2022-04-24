@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+include_once 'action/addproduct.class.php';
+
+$resData = addproductClass::getData();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +31,15 @@
                     </h1>
                 </div>
                 <div class="col-6 text-end row align-items-center">
-                    <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php if (isset($_SESSION['name'])) : ?>
+                        <strong>
+                            <a class="text-light" href="dashboard.php"><?php echo $_SESSION['name'] ?></a>
+                        </strong>
+                        <a onclick="if(!confirm('ฉันต้องการออกจากระบบ!')) return false" class="text-light" href="logout.php">ออกจากระบบ</a>
+                    <?php else : ?>
+                        <h5><a href="login.php" class="text-light text-decoration-none">LOGIN</a></h5>
+                    <?php endif; ?>
+
                 </div>
             </div>
         </div>
@@ -40,16 +57,17 @@
     <section class="col-12 mt-5">
         <div class="container">
             <div class="row  p-3 gap-3 justify-content-center">
-                <?php for ($i = 0; $i < 16; $i++) : ?>
+                <?php foreach ($resData as $key => $item) : ?>
+                    <?php $file = scandir("images/{$item['productCode']}") ?>
                     <div class="card p-0" style="width: 18rem;">
-                        <img src="https://image.makewebeasy.net/makeweb/0/H2T6vAxbq/FieldandCamping/หมวกปีก_Outdoor_เขียว.jpg" class="card-img-top" alt="หมวก">
+                        <img src="<?php echo "images/{$item['productCode']}/$file[2]" ?>" class="card-img-top" alt="หมวก">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="detail.php" class="btn btn-primary">Go somewhere</a>
+                            <h5 class="card-title"><?php echo $item['productName'] ?></h5>
+                            <small class="card-text"><?php echo  mb_substr($item['productDetail'], 0, 100, 'utf-8'); ?></small>
+                            <a href="detail.php?id=<?php echo $item['productCode'] ?>" class="btn btn-primary mt-4">รายละเอียด</a>
                         </div>
                     </div>
-                <?php endfor; ?>
+                <?php endforeach; ?>
 
             </div>
         </div>
