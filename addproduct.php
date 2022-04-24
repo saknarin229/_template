@@ -1,3 +1,14 @@
+<?php
+
+include_once 'action/addproduct.class.php';
+include_once 'myclassOption/option.class.php';
+optionClass::chackLogin();
+
+if(isset($_POST['btn_save'])) addproductClass::action();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,9 +20,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
-
 <body>
-
     <!-- ------------ Header -->
     <header class="col-12 bg-info border shadow-sm">
         <div class="container">
@@ -28,13 +37,11 @@
         </div>
     </header>
     <!-- ------------ End Header -->
-
     <!-- --------------- Title -->
     <section class="col-12 text-center p-5">
         <h1>ADD PRODUCT</h1>
     </section>
     <!-- --------------- End Title -->
-
     
     <section class="col-12 mt-5">
         <div class="container">
@@ -46,12 +53,10 @@
             </div>
         </div>
     </section>
-
     <!-- ---------------- product -->
     <section class="col-12 mt-5">
         <div class="container">
             <div class="row  p-3 gap-3 justify-content-center">
-
                 <div class="col-6">
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
@@ -71,18 +76,15 @@
                             <input type="file" required name="file[]" multiple accept="image/*" class="form-control form-control-sm">
                         </div>                        
                         <div class="text-end">
-                            <!-- <button type="submit" class="btn btn-primary">LOGIN</button> -->
-                            <a href="productlist.php" class="btn btn-primary">SAVE PRODUCT</a>
+                            <button type="submit" name="btn_save" class="btn btn-primary">SAVE PRODUCT</button>
+                            <!-- <a href="productlist.php"  class="btn btn-primary">SAVE PRODUCT</a> -->
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </section>
     <!-- ---------------- end -->
-
-
     <footer class="col-12 mt-5 bg-secondary">
         <div class="container">
             <div class="row text-center p-3 text-light">
@@ -91,7 +93,5 @@
             </div>
         </div>
     </footer>
-
 </body>
-
 </html>

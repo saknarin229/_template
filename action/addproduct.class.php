@@ -2,18 +2,34 @@
 include_once 'dbconnect/connect.php';
 class addproductClass extends dbconnect{
     static public function action(){
-
+        self::insertData();
     }
 
     static private function insertData(){
+
+        $productName = $_POST['productName'];
+        $productDetail = $_POST['productDetail'];
+        $productPrict = $_POST['productPrict'];
+        $code = rand(10000, 999999);
+
         $sql = "INSERT INTO product_data(productName, productDetail, productPrice, productCode, productStatus) VALUES (?,?,?,?,?)";
-        $data = array();
+
+        $data = array($productName, $productDetail, $productPrict, $code, 0);
+
         self::ExecuteData($sql, $data);
+        echo "<script>alert('บันทึกข้อมูลสำเร็จ');</script>";
     }
 
     static private function updateData(){
-        $sql = "UPDATE product_data SET productName=?,productDetail=?,productPrice=?,productCode=?,productStatus=? WHERE id=?";
-        $data = array();
+        $productName = $_POST['productName'];
+        $productDetail = $_POST['productDetail'];
+        $productPrict = $_POST['productPrict'];
+        $id = $_GET['id'];
+
+        $sql = "UPDATE product_data SET productName=?,productDetail=?,productPrice=? WHERE id=?";
+
+        $data = array($productName, $productDetail, $productPrict, $id);
+
         self::ExecuteData($sql, $data);
     }
 
