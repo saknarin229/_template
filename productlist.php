@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    include_once 'action/addproduct.class.php';
+    include_once 'myclassOption/option.class.php';
+    // optionClass::chackLogin();
+
+    $resData = addproductClass::getData();
+    // print_r($resData);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,13 +75,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php for($i = 0; $i < 20; $i++):?>
+                            <?php foreach($resData as $key=>$item):?>
                             <tr>
-                                <td>123456<?php echo $i?></td>
-                                <td>product myname </td>
-                                <td>250.00 บาท</td>
+                                <td><?php echo $item['productCode']?></td>
+                                <td><?php echo $item['productName']?> </td>
+                                <td><?php echo $item['productPrice'] ?> บาท</td>
                                 <td>
-                                    <a href="addproduct.php">
+                                    <a href="addproduct.php?id=<?php echo $item['id']?>">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>
@@ -80,7 +91,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            <?php endfor; ?>
+                            <?php endforeach; ?>
                         </tbody>
 
                     </table>

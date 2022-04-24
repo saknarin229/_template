@@ -6,6 +6,16 @@ optionClass::chackLogin();
 
 if(isset($_POST['btn_save'])) addproductClass::action();
 
+$productName = null;
+$productDetail = null;
+$productPrict = null;
+if(isset($_GET['id'])) {
+    $resData = addproductClass::getDataId($_GET['id']);
+    $productName = $resData[0]['productName'];
+    $productDetail = $resData[0]['productDetail'];
+    $productPrict = $resData[0]['productPrict'];
+}
+
 ?>
 
 
@@ -61,22 +71,23 @@ if(isset($_POST['btn_save'])) addproductClass::action();
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label class="form-label">product name</label>
-                            <input type="text" required name="productName" class="form-control form-control-sm">
+                            <input type="text" required name="productName" class="form-control form-control-sm" value="<?php echo  $productName?>">
                         </div>
                         <div class="mb-3">
                         <label class="form-label">product detail</label>
-                            <input type="text" required name="productDetail" class="form-control form-control-sm">
+                            <input type="text" required name="productDetail" class="form-control form-control-sm" value="<?php echo  $productDetail?>">
                         </div>
                         <div class="mb-3">
                         <label class="form-label">product price</label>
-                            <input type="text" required name="productPrict" class="form-control form-control-sm">
+                            <input type="text" required name="productPrict" class="form-control form-control-sm" value="<?php echo  $productPrict?>">
                         </div>                        
                         <div class="mb-3">
                         <label class="form-label">upload image</label>
-                            <input type="file"  name="file[]" multiple accept="image/*" class="form-control form-control-sm">
+                            <input type="file" required name="file[]" multiple accept="image/*" class="form-control form-control-sm">
                         </div>                        
                         <div class="text-end">
                             <button type="submit" name="btn_save" class="btn btn-primary">SAVE PRODUCT</button>
+                            <!-- <a href="productlist.php"  class="btn btn-primary">SAVE PRODUCT</a> -->
                         </div>
                     </form>
                 </div>

@@ -2,7 +2,12 @@
 include_once 'dbconnect/connect.php';
 class addproductClass extends dbconnect{
     static public function action(){
-        self::insertData();
+        if(isset($_GET['id'])){
+            self::updateData();
+        }else{
+            self::insertData();
+        }
+
     }
 
     static private function insertData(){
@@ -34,6 +39,14 @@ class addproductClass extends dbconnect{
     }
 
     static public function getData(){
+        $sql = "SELECT * FROM product_data WHERE ?";
+        $data = array(1);
+        return self::getExecute($sql, $data);
+    }
 
+    static public function getDataId($id){
+        $sql = "SELECT * FROM product_data WHERE id=?";
+        $data = array($id);
+        return self::getExecute($sql, $data);
     }
 }
