@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once 'action/addproduct.class.php';
 include_once 'myclassOption/option.class.php';
 optionClass::chackLogin();
@@ -73,11 +73,10 @@ if(isset($_POST['btn_save'])) addproductClass::action();
                         </div>                        
                         <div class="mb-3">
                         <label class="form-label">upload image</label>
-                            <input type="file" required name="file[]" multiple accept="image/*" class="form-control form-control-sm">
+                            <input type="file"  name="file[]" multiple accept="image/*" class="form-control form-control-sm">
                         </div>                        
                         <div class="text-end">
                             <button type="submit" name="btn_save" class="btn btn-primary">SAVE PRODUCT</button>
-                            <!-- <a href="productlist.php"  class="btn btn-primary">SAVE PRODUCT</a> -->
                         </div>
                     </form>
                 </div>
